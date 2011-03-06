@@ -1,9 +1,7 @@
-dev_wflash - Mount a writable dev_flash as dev_wflash.
+WritableFlash - Mount a writable dev_flash as dev_wflash.
 
 Author : @jjolano
 
 Source code: https://github.com/axtux/dev_wflash
-
-This program will mount a writable dev_flash into dev_wflash, which can be used by PS3 FTP servers and file managers.
 
 USE AT YOUR OWN RISK !

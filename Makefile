@@ -12,8 +12,8 @@ INCLUDE		:=	include
 DATA		:=	data
 LIBS		:=	-lgcm_sys -lreality -lsysutil -lio
 
-TITLE		:=	dev_blind
-APPID		:=	BLND00001
+TITLE		:=	WritableFlash
+APPID		:=	WFLASH000
 CONTENTID	:=	UP0001-$(APPID)_00-0000000000000000
 PKGFILES	:=	release
 SFOXML		:=	sfo.xml

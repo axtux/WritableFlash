@@ -1,4 +1,4 @@
-// dev_blind - a (very simple) dev_flash write access mount enabler
+// WritableFlash - mount a writable dev_flash
 // by @jjolano
 
 #include <io/pad.h>
@@ -8,12 +8,13 @@
 
 #include <lv2/process.h>
 
+#include <psl1ght/lv2.h>
 #include <psl1ght/lv2/filesystem.h>
 
 #include "rsxutil.h"
 #include "filesystem_mount.h"
 
-const char* MOUNT_POINT = "/dev_blind"; // the path where dev_blind should be mounted to
+const char* MOUNT_POINT = "/dev_wflash"; // the directory to mount writable dev_flash
 
 int currentBuffer = 0;
 msgButton dlg_action;
@@ -36,7 +37,7 @@ void showmessage(msgType type, const char* message)
 	msgDialogOpen(type, message, handledialog, 0, NULL);
 	
 	dlg_action = 0;
-	while(dlg_action == 0)
+	while(!dlg_action)
 	{
 		sysCheckCallback();
 		
@@ -59,32 +60,18 @@ int main(int argc, const char* argv[])
 	ioPadInit(7);
 	
 	waitFlip();
+
+	Lv2FsStat entry;
+	int is_mounted = lv2FsStat(MOUNT_POINT, &entry);
 	
-	showmessage(mdialogyesno, "dev_blind v1.1 by jjolano (Twitter: @jjolano)\n\nThis program allows you to write to the flash memory (dev_flash) of your console.\nDO NOT USE THIS PROGRAM IF YOU DON'T KNOW EXACTLY WHAT YOU ARE DOING!\n\nCapiche?");
+	showmessage(mdialogyesno, (is_mounted == 0) ? "Do you want to unmount dev_wflash ?" : "Do you want to mount dev_wflash ?");
 	
 	if(dlg_action == MSGDIALOG_BUTTON_YES)
 	{
-		// see if dev_blind is mounted already
-		Lv2FsStat entry;
-		int is_mounted = lv2FsStat(MOUNT_POINT, &entry);
-		
-		showmessage(mdialogyesno, (is_mounted == 0) ? "Do you want to unmount dev_blind?" : "Do you want to mount dev_blind?");
-		
-		if(dlg_action == MSGDIALOG_BUTTON_YES)
-		{
-			if(is_mounted == 0)
-			{
-				// unmount dev_blind
-				int unmounted_dev_blind = lv2FsUnmount(MOUNT_POINT);
-				showmessage(mdialogok, (unmounted_dev_blind == 0) ? "Successfully unmounted dev_blind." : "An error occured while unmounting dev_blind.");
-			}
-			else
-			{
-				// mount dev_flash to dev_blind
-				int mounted_dev_blind = lv2FsMount(DEV_FLASH1, FS_FAT32, MOUNT_POINT, 0);
-				showmessage(mdialogok, (mounted_dev_blind == 0) ? "Successfully mounted dev_blind." : "An error occured while mounting dev_blind.");
-			}
-		}
+		if(is_mounted == 0)
+			showmessage(mdialogok, (lv2FsUnmount(MOUNT_POINT) == 0) ? "Successfully unmounted dev_wflash." : "An error occured while unmounting dev_wflash.");
+		else
+			showmessage(mdialogok, (lv2FsMount(DEV_FLASH1, FS_FAT32, MOUNT_POINT, 0) == 0) ? "Successfully mounted dev_wflash." : "An error occured while mounting dev_wflash.");
 	}
 	
 	return 0;

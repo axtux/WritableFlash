@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <sfo>
-	<value name="APP_VER" type="string">01.01</value>
+	<value name="APP_VER" type="string">01.00</value>
 	<value name="ATTRIBUTE" type="integer">
 		0
 	</value>
@@ -26,10 +26,10 @@
 		279
 	</value>
 	<value name="TITLE" type="string">
-		dev_blind
+		WritableFlash
 	</value>
 	<value name="TITLE_ID" type="string">
-		BLND00001
+		WFLASH000
 	</value>
-	<value name="VERSION" type="string">01.01</value>
+	<value name="VERSION" type="string">01.00</value>
 </sfo>
