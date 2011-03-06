@@ -2,6 +2,6 @@ WritableFlash - Mount a writable dev_flash as dev_wflash.
 
 Author : @jjolano
 
-Source code: https://github.com/axtux/dev_wflash
+Source code: https://github.com/axtux/WritableFlash
 
 USE AT YOUR OWN RISK !
