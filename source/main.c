@@ -14,7 +14,7 @@
 #include "rsxutil.h"
 #include "filesystem_mount.h"
 
-const char* MOUNT_POINT = "/dev_wflash"; // the directory to mount writable dev_flash
+const char* MOUNT_POINT = "/dev_rwflash"; // the directory to mount writable dev_flash
 
 int currentBuffer = 0;
 msgButton dlg_action;
@@ -64,14 +64,14 @@ int main(int argc, const char* argv[])
 	Lv2FsStat entry;
 	int is_mounted = lv2FsStat(MOUNT_POINT, &entry);
 	
-	showmessage(mdialogyesno, (is_mounted == 0) ? "Do you want to unmount dev_wflash ?" : "Do you want to mount dev_wflash ?");
+	showmessage(mdialogyesno, (is_mounted == 0) ? "Do you want to unmount dev_rwflash ?" : "Do you want to mount dev_rwflash ?");
 	
 	if(dlg_action == MSGDIALOG_BUTTON_YES)
 	{
 		if(is_mounted == 0)
-			showmessage(mdialogok, (lv2FsUnmount(MOUNT_POINT) == 0) ? "Successfully unmounted dev_wflash." : "An error occured while unmounting dev_wflash.");
+			showmessage(mdialogok, (lv2FsUnmount(MOUNT_POINT) == 0) ? "Successfully unmounted dev_rwflash." : "An error occured while unmounting dev_rwflash.");
 		else
-			showmessage(mdialogok, (lv2FsMount(DEV_FLASH1, FS_FAT32, MOUNT_POINT, 0) == 0) ? "Successfully mounted dev_wflash." : "An error occured while mounting dev_wflash.");
+			showmessage(mdialogok, (lv2FsMount(DEV_FLASH1, FS_FAT32, MOUNT_POINT, 0) == 0) ? "Successfully mounted dev_rwflash." : "An error occured while mounting dev_rwflash.");
 	}
 	
 	return 0;
